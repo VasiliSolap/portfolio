@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vasili Solap — Python Developer · ML & AI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #111111;
+      color: #f0f0f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(17,17,17,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 0.5px solid #2a2a2a;
+      padding: 20px 48px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 3px; color: #a0b4c8;
+      text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 32px; }
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; color: #6b7280;
+      text-decoration: none; letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #a0b4c8; }
+
+    /* MAIN */
+    main { max-width: 1000px; margin: 0 auto; padding: 0 48px; }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding-top: 80px;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; letter-spacing: 4px;
+      color: #a0b4c8; margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(52px, 8vw, 88px);
+      font-weight: 800; line-height: 1.0;
+      letter-spacing: -3px; margin-bottom: 28px;
+      color: #f0f0f0;
+    }
+    .hero h1 span { color: #a0b4c8; }
+    .hero-sub {
+      font-size: 16px; color: #6b7280;
+      line-height: 1.75; max-width: 480px;
+      margin-bottom: 44px; font-weight: 300;
+    }
+    .hero-contacts { display: flex; gap: 28px; flex-wrap: wrap; }
+    .contact-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px; color: #6b7280;
+      text-decoration: none; letter-spacing: 0.5px;
+      transition: color 0.2s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .contact-link:hover { color: #c8d8e8; }
+
+    /* DIVIDER */
+    .divider {
+      height: 0.5px;
+      background: linear-gradient(90deg, transparent 0%, #a0b4c8 50%, transparent 100%);
+      margin: 0;
+      opacity: 0.3;
+    }
+
+    /* SECTIONS */
+    section { padding: 80px 0; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 4px;
+      color: #a0b4c8; text-transform: uppercase;
+      margin-bottom: 40px;
+      display: flex; align-items: center; gap: 20px;
+    }
+    .section-label::after {
+      content: ''; flex: 1;
+      height: 0.5px; background: #2a2a2a;
+    }
+
+    /* PATH */
+    .path { display: flex; flex-direction: column; }
+    .path-item { display: flex; gap: 24px; }
+    .path-line { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+    .path-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 6px;
+      background: #a0b4c8;
+    }
+    .path-connector { width: 0.5px; flex: 1; min-height: 36px; background: #2a2a2a; }
+    .path-content { padding-bottom: 36px; }
+    .path-meta {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; letter-spacing: 2px;
+      color: #4a5568; text-transform: uppercase; margin-bottom: 4px;
+    }
+    .path-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px; font-weight: 700;
+      color: #e0e0e0; margin-bottom: 4px;
+    }
+    .path-desc { font-size: 13px; color: #6b7280; font-weight: 300; }
+
+    /* PROJECTS */
+    .projects {
+      border: 0.5px solid #2a2a2a;
+      border-radius: 12px; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .project-card {
+      background: #1a1a1a;
+      padding: 32px 36px;
+      border-bottom: 0.5px solid #2a2a2a;
+      transition: background 0.2s;
+    }
+    .project-card:last-child { border-bottom: none; }
+    .project-card:hover { background: #1e1e1e; }
+
+    .card-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px; font-weight: 700;
+      color: #f0f0f0; letter-spacing: -0.3px;
+    }
+    .card-source {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; color: #4a5568;
+      letter-spacing: 1px; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      font-size: 13px; color: #6b7280;
+      line-height: 1.65; margin-bottom: 16px;
+      font-weight: 300; max-width: 680px;
+    }
+    .card-pipeline {
+      display: flex; align-items: center; gap: 6px;
+      flex-wrap: wrap; margin-bottom: 16px;
+    }
+    .pipe-step {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; padding: 4px 10px;
+      border-radius: 3px;
+      background: #1f2a35;
+      border: 0.5px solid #2a3a45;
+      color: #a0b4c8; letter-spacing: 0.5px;
+    }
+    .pipe-arrow { color: #2a2a2a; font-size: 11px; }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 16px; }
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; padding: 3px 9px;
+      border-radius: 3px;
+      background: #222222;
+      border: 0.5px solid #2a2a2a;
+      color: #6b7280; letter-spacing: 0.5px;
+    }
+    .card-links { display: flex; gap: 20px; }
+    .card-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; color: #a0b4c8;
+      text-decoration: none; letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .card-link:hover { color: #c8d8e8; }
+
+    .badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 1.5px;
+      padding: 3px 9px; border-radius: 3px;
+      text-transform: uppercase; white-space: nowrap;
+    }
+    .badge-gh  { background: #1a221a; color: #5a8a5a; border: 0.5px solid #2a322a; }
+    .badge-kg  { background: #1a2535; color: #a0b4c8; border: 0.5px solid #2a3545; }
+    .badge-gm  { background: #251a1a; color: #8a5a5a; border: 0.5px solid #352a2a; }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0.5px;
+      background: #2a2a2a;
+      border: 0.5px solid #2a2a2a;
+      border-radius: 12px; overflow: hidden;
+    }
+    .skill-group { background: #1a1a1a; padding: 24px 20px; }
+    .skill-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 9px; letter-spacing: 2.5px;
+      color: #a0b4c8; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .skill-item {
+      font-size: 12px; color: #6b7280;
+      margin-bottom: 6px; font-weight: 300;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 0.5px solid #2a2a2a;
+      padding: 44px 48px;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 20px;
+      max-width: 100%;
+    }
+    .footer-contacts { display: flex; gap: 28px; flex-wrap: wrap; }
+    .footer-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; color: #4a5568;
+      text-decoration: none; letter-spacing: 1px;
+      text-transform: uppercase; transition: color 0.2s;
+    }
+    .footer-link:hover { color: #a0b4c8; }
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px; color: #3a3a3a;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      main { padding: 0 24px; }
+      .hero h1 { letter-spacing: -1px; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 32px 24px; flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Vasili Solap</div>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="mailto:vasilisolap@gmail.com">Email</a>
+    <a href="https://github.com/VasiliSolap" target="_blank">GitHub</a>
+  </div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Python Developer · ML & AI</div>
+    <h1>Vasili<br><span>Solap</span></h1>
+    <p class="hero-sub">Building end-to-end ML systems — from data ingestion to LLM-powered analysis and cloud deployment.</p>
+    <div class="hero-contacts">
+      <a href="mailto:vasilisolap@gmail.com" class="contact-link">✉ vasilisolap@gmail.com</a>
+      <a href="https://linkedin.com/in/vasili-solap-06b63b407" target="_blank" class="contact-link">↗ linkedin.com/in/vasili-solap-06b63b407</a>
+      <a href="https://github.com/VasiliSolap" target="_blank" class="contact-link">↗ github.com/VasiliSolap</a>
+    </div>
+  </div>
+
+</main>
+
+<div class="divider"></div>
+
+<main>
+
+  <!-- LEARNING PATH -->
+  <section>
+    <div class="section-label">Learning Path</div>
+    <div class="path">
+      <div class="path-item">
+        <div class="path-line"><div class="path-dot"></div><div class="path-connector"></div></div>
+        <div class="path-content">
+          <div class="path-meta">Completed · 2025</div>
+          <div class="path-title">Stanford Code in Place</div>
+          <div class="path-desc">Python fundamentals, graphics, game development</div>
+        </div>
+      </div>
+      <div class="path-item">
+        <div class="path-line"><div class="path-dot"></div><div class="path-connector"></div></div>
+        <div class="path-content">
+          <div class="path-meta">Completed</div>
+          <div class="path-title">Code the Dream — Python 100</div>
+          <div class="path-desc">Data analysis, ML fundamentals, Streamlit dashboards</div>
+        </div>
+      </div>
+      <div class="path-item">
+        <div class="path-line"><div class="path-dot"></div></div>
+        <div class="path-content">
+          <div class="path-meta">Completed · Cohort 26.2</div>
+          <div class="path-title">Code the Dream — Python 200</div>
+          <div class="path-desc">PyTorch, Azure, LLM APIs, LangChain, Prefect, smolagents</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="divider"></div>
+
+<main>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label">Projects</div>
+    <div class="projects">
+
+      <div class="project-card">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Weather ETL Pipeline</div>
+            <div class="card-source">Code the Dream Python 200 · ETL · Azure · LLM</div>
+          </div>
+          <span class="badge badge-gh">GitHub</span>
+        </div>
+        <p class="card-desc">End-to-end ETL pipeline that fetches hourly weather forecasts, classifies running conditions as good / marginal / bad using GPT-4o-mini, and stores results in Azure Blob Storage. Orchestrated with Prefect.</p>
+        <div class="card-pipeline">
+          <span class="pipe-step">Open-Meteo API</span><span class="pipe-arrow">→</span>
+          <span class="pipe-step">GPT-4o-mini</span><span class="pipe-arrow">→</span>
+          <span class="pipe-step">Azure Blob</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Python</span><span class="tag">Prefect</span>
+          <span class="tag">OpenAI</span><span class="tag">Azure</span><span class="tag">ETL</span>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/VasiliSolap/weather-etl-pipeline" target="_blank" class="card-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top">
+          <div>
+            <div class="card-title">World Happiness Analysis Pipeline</div>
+            <div class="card-source">Code the Dream Python 100 · Data Analysis · Prefect</div>
+          </div>
+          <span class="badge badge-gh">GitHub</span>
+        </div>
+        <p class="card-desc">Prefect-orchestrated pipeline analyzing 10 years of World Happiness Report data across 175 countries. Includes t-tests (pandemic impact), Bonferroni-corrected Pearson correlations, and automated visualizations.</p>
+        <div class="card-pipeline">
+          <span class="pipe-step">10 CSV files</span><span class="pipe-arrow">→</span>
+          <span class="pipe-step">Stats + Viz</span><span class="pipe-arrow">→</span>
+          <span class="pipe-step">Summary</span>
+        </div>
+        <div class="card-tags">
+          <span class="tag">Python</span><span class="tag">pandas</span>
+          <span class="tag">scipy</span><span class="tag">Prefect</span>
+          <span class="tag">Hypothesis Testing</span>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/VasiliSolap/world-happiness-analysis" target="_blank" class="card-link">GitHub ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Computer Vision — Pretrained Model Comparison</div>
+            <div class="card-source">Code the Dream Python 200 · PyTorch · Transfer Learning</div>
+          </div>
+          <span class="badge badge-kg">Kaggle</span>
+        </div>
+        <p class="card-desc">Benchmarks ResNet18, MobileNetV3-Small and EfficientNet-B0 on Intel Image Classification (6 scene categories). Covers accuracy, inference latency, PCA feature embeddings, and production deployment recommendations.</p>
+        <div class="card-tags">
+          <span class="tag">PyTorch</span><span class="tag">torchvision</span>
+          <span class="tag">Transfer Learning</span><span class="tag">PCA</span>
+          <span class="tag">scikit-learn</span>
+        </div>
+        <div class="card-links">
+          <a href="https://www.kaggle.com/code/vasilisolap/computer-vision-pretrained-model-comparison" target="_blank" class="card-link">Kaggle ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Global Superstore Sales & Profit Analysis</div>
+            <div class="card-source">Code the Dream Python 100 · EDA · Business Intelligence</div>
+          </div>
+          <span class="badge badge-kg">Kaggle</span>
+        </div>
+        <p class="card-desc">Business intelligence analysis of 51,290 orders across 147 countries (2011–2014). Identifies which markets, product categories, and time periods drive profit using feature engineering, aggregations, and visualizations.</p>
+        <div class="card-tags">
+          <span class="tag">pandas</span><span class="tag">numpy</span>
+          <span class="tag">matplotlib</span><span class="tag">Feature Engineering</span>
+          <span class="tag">EDA</span>
+        </div>
+        <div class="card-links">
+          <a href="https://www.kaggle.com/code/vasilisolap/global-superstore-sales-profit-analysis" target="_blank" class="card-link">Kaggle ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Diabetes Health Indicators EDA</div>
+            <div class="card-source">Code the Dream Python 100 · EDA · Healthcare Data</div>
+          </div>
+          <span class="badge badge-kg">Kaggle</span>
+        </div>
+        <p class="card-desc">Exploratory data analysis of 253,680 CDC survey responses to identify key health and lifestyle factors associated with diabetes risk. Includes correlation heatmaps, pair plots, and distribution analysis.</p>
+        <div class="card-tags">
+          <span class="tag">pandas</span><span class="tag">seaborn</span>
+          <span class="tag">matplotlib</span><span class="tag">EDA</span>
+          <span class="tag">Healthcare</span>
+        </div>
+        <div class="card-links">
+          <a href="https://www.kaggle.com/code/vasilisolap/diabetes-health-indicators-eda" target="_blank" class="card-link">Kaggle ↗</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="card-top">
+          <div>
+            <div class="card-title">Cosmic Breakout</div>
+            <div class="card-source">Stanford Code in Place · Game Development · Pygame</div>
+          </div>
+          <span class="badge badge-gm">Game</span>
+        </div>
+        <p class="card-desc">A Breakout-style arcade game with a cosmic theme, built with Python and Pygame. Mouse-controlled paddle, collision detection, row-based scoring system, and animated star field background.</p>
+        <div class="card-tags">
+          <span class="tag">Python</span><span class="tag">Pygame</span>
+          <span class="tag">Game Loop</span><span class="tag">Collision Detection</span>
+        </div>
+        <div class="card-links">
+          <a href="https://github.com/VasiliSolap/cosmic-breakout" target="_blank" class="card-link">GitHub ↗</a>
+          <a href="https://codeinplace.stanford.edu/cip6/share/FuuCUeZJI8cTGAkHdoaC" target="_blank" class="card-link">Stanford ↗</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<div class="divider"></div>
+
+<main>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-label">Languages</div>
+        <div class="skill-item">Python</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">ML / Data</div>
+        <div class="skill-item">scikit-learn</div>
+        <div class="skill-item">PyTorch</div>
+        <div class="skill-item">pandas</div>
+        <div class="skill-item">LlamaIndex</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Cloud</div>
+        <div class="skill-item">Azure OpenAI</div>
+        <div class="skill-item">Azure Blob</div>
+        <div class="skill-item">DefaultAzureCredential</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">LLMs & Agents</div>
+        <div class="skill-item">LangChain</div>
+        <div class="skill-item">smolagents</div>
+        <div class="skill-item">GPT-4o-mini</div>
+        <div class="skill-item">Prefect</div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-label">Tools</div>
+        <div class="skill-item">Git / GitHub</div>
+        <div class="skill-item">Streamlit</div>
+        <div class="skill-item">Pygame</div>
+        <div class="skill-item">VS Code</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-contacts">
+    <a href="mailto:vasilisolap@gmail.com" class="footer-link">vasilisolap@gmail.com</a>
+    <a href="https://linkedin.com/in/vasili-solap-06b63b407" target="_blank" class="footer-link">LinkedIn</a>
+    <a href="https://github.com/VasiliSolap" target="_blank" class="footer-link">GitHub</a>
+  </div>
+  <div class="footer-copy">Vasili Solap · 2025</div>
+</footer>
+
+</body>
+</html>
